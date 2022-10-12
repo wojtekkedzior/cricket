@@ -6,7 +6,7 @@ from math import radians, cos, sin, asin, sqrt
 parser = argparse.ArgumentParser(description='A test program.')
 parser.add_argument("la", help="Latitude.")
 parser.add_argument("lo", help="Longitude.")
-parser.add_argument("limit", help="max distance from centre")
+parser.add_argument("limit", help="max distance from centre in km")
 
 args = parser.parse_args()
 print(args)
@@ -35,7 +35,7 @@ def distance(lat1, lat2, lon1, lon2):
     # calculate the result
     return(c * r)
 
-with open('clubs.csv') as f:
+with open('currentClubs.csv') as f:
      reader = csv.reader(f)
      header_row = next(reader)
 
@@ -43,41 +43,20 @@ with open('clubs.csv') as f:
         writer = csv.writer(clubsInRange)
         writer.writerow(header_row)
 
-     
-
         centerLatitude = float(args.la)
         centerLongitude = float(args.lo)
         limit = int(args.limit)
 
-        writer.writerow(["Center", "", "","","","","","","","",centerLatitude, centerLongitude])
+        writer.writerow(["Center","","","","","","","","","",centerLatitude, centerLongitude])
 
         for row in reader:
+
+            if row[10] == "":
+              continue
+            
             clubLatitude = float(row[10])
             clubLongitude = float(row[11])
 
             if distance(centerLatitude, clubLatitude, centerLongitude, clubLongitude) < limit:
                 print(row[0], clubLatitude, clubLongitude)
                 writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], clubLatitude, clubLongitude])
-
-
-
-# header = ['name', 'area', 'country_code2', 'country_code3']
-# data = ['Afghanistan', 652090, 'AF', 'AFG']
-
-
-
-#     # write the header
-#     writer.writerow(header)
-
-#     # write the data
-#     writer.writerow(data)
-
-
-     
-     
-# # driver code
-# lat1 = 53.32055555555556
-# lat2 = 53.31861111111111
-# lon1 = -1.7297222222222221
-# lon2 =  -1.6997222222222223
-

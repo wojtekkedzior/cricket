@@ -15,12 +15,12 @@ with open('clubs-without-lat-long.csv') as f:
 
         for row in reader:
             postcode = row[9]
+            print("adsdadsa")
 
-
-            
             r =requests.get('https://geocode.xyz/'+postcode+'?json=1')
             print(r.text)
-            time.sleep(30)
+            r.close
+            time.sleep(90)
 
             # if distance(centerLatitude, clubLatitude, centerLongitude, clubLongitude) < limit:
                 # print(centerLatitude, clubLatitude, centerLongitude, clubLongitude)
