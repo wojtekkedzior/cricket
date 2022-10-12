@@ -1,6 +1,15 @@
 import csv
+import argparse
 # Python 3 program to calculate Distance Between Two Points on Earth
 from math import radians, cos, sin, asin, sqrt
+
+parser = argparse.ArgumentParser(description='A test program.')
+parser.add_argument("la", help="Latitude.")
+parser.add_argument("lo", help="Longitude.")
+parser.add_argument("limit", help="max distance from centre")
+
+args = parser.parse_args()
+print(args)
 
 def isWithInRange(latitude, longitude):
     print(latitude, longitude)
@@ -29,17 +38,16 @@ def distance(lat1, lat2, lon1, lon2):
 with open('clubs.csv') as f:
      reader = csv.reader(f)
      header_row = next(reader)
-     print(header_row)
 
      with open('clubsInRange.csv', 'w', encoding='UTF8') as clubsInRange:
         writer = csv.writer(clubsInRange)
         writer.writerow(header_row)
 
-        #   colechester - CO1 1RQ  - 51.89548,0.89597
-        centerLatitude = 51.89548
-        centerLongitude = 0.89597
+     
 
-        limit = 20
+        centerLatitude = float(args.la)
+        centerLongitude = float(args.lo)
+        limit = int(args.limit)
 
         writer.writerow(["Center", "", "","","","","","","","",centerLatitude, centerLongitude])
 
@@ -48,9 +56,8 @@ with open('clubs.csv') as f:
             clubLongitude = float(row[11])
 
             if distance(centerLatitude, clubLatitude, centerLongitude, clubLongitude) < limit:
-                print(centerLatitude, clubLatitude, centerLongitude, clubLongitude)
+                print(row[0], clubLatitude, clubLongitude)
                 writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], clubLatitude, clubLongitude])
-
 
 
 
