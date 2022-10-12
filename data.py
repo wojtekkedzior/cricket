@@ -35,7 +35,7 @@ def distance(lat1, lat2, lon1, lon2):
     # calculate the result
     return(c * r)
 
-with open('currentClubs.csv') as f:
+with open('clubs.csv') as f:
      reader = csv.reader(f)
      header_row = next(reader)
 
@@ -53,7 +53,7 @@ with open('currentClubs.csv') as f:
 
             if row[10] == "":
               continue
-            
+
             clubLatitude = float(row[10])
             clubLongitude = float(row[11])
 
